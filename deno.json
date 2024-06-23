@@ -1,0 +1,10 @@
+{
+  "deploy": {
+    "project": "8722fda5-e3de-424a-9cfe-0f74be94a1aa",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "main.ts"
+  }
+}
