@@ -6,32 +6,35 @@ import {
   type ConversationFlavor,
   conversations,
   createConversation,
-} from "https://deno.land/x/grammy_conversations@v1.2.0/mod.ts";
+} from "./deps.deno.ts";
 
 type MyContext = Context & ConversationFlavor;
 type MyConversation = Conversation<MyContext>;
 
 const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") || "");
 
-bot.use(session({initial: () => ({})}));  
-bot.use(conversations());
-
-/** Defines the conversation */
 async function greeting(conversation: MyConversation, ctx: MyContext) {
 
-    await ctx.reply('Hello! What is your name?');
-    const nameResponse = await conversation.wait();
-    const name = nameResponse.message?.text;
+  await ctx.reply('Hello! What is your name?');
+  const nameResponse = await conversation.wait();
+  const name = nameResponse.message?.text;
 
-    await ctx.reply(`Nice to meet you, ${name}! How old are you?`);
-    const ageResponse = await conversation.wait();
-    const age = ageResponse.message?.text;
+  await ctx.reply(`Nice to meet you, ${name}! How old are you?`);
+  const ageResponse = await conversation.wait();
+  const age = ageResponse.message?.text;
 
-    await ctx.reply(`Thank you, ${name}! I see you are ${age} years old.`);
+  await ctx.reply(`Thank you, ${name}! I see you are ${age} years old.`);
 
 }
 
+bot.use(session({initial: () => ({})}));  
+bot.use(conversations());
+
 bot.use(createConversation(greeting));
+
+/** Defines the conversation */
+
+
 
 bot.command('start', async(ctx) => {
   ctx.reply('Welcome! Up and running.')
