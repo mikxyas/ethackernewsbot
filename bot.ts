@@ -1,4 +1,4 @@
-import { Bot } from "../ethackernews/deps.deno.ts";
+import { Bot } from "./deps.deno.ts";
 
 export const bot = new Bot(Deno.env.get("BOT_TOKEN") || "");
 
