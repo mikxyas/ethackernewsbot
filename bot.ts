@@ -46,7 +46,7 @@ bot.command("generate", async(ctx) => {
   // generate a 23 character token
   const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   // add database secret as a check for future  
-  const {data, error} = await supabase.from("telegra_profiles").insert({
+  const {data, error} = await supabase.from("telegram_profiles").insert({
       telegram_id: id,
       token: token,
       tg_username: ctx.from?.username,
