@@ -40,7 +40,12 @@ bot.use(createConversation(movie));
 
 bot.command('start', async(ctx) => {
   // ctx.reply('Welcome! Up and running.')
-  await ctx.conversation.enter('movie')
+  try {
+    await ctx.conversation.enter('movie')
+  } catch (err) {
+    console.error(err)
+  }
+  // await ctx.conversation.enter('movie')
 })
 
 bot.command('ping', (ctx) => ctx.reply(`Pong! ${new Date()} ${Date.now()}`))
