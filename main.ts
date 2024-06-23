@@ -1,13 +1,12 @@
 console.log(`Function "telegram-bot" up and running!`);
-
-import { Bot, Context, session, webhookCallback, } from "https://deno.land/x/grammy@v1.8.3/mod.ts";
 // import { webhookCallback } from './deps.deno.ts';
 import {
-  Conversation,
-  ConversationFlavor,
+  Bot, Context, session, webhookCallback,
+  type Conversation,
+  type ConversationFlavor,
   conversations,
   createConversation,
-} from "https://deno.land/x/grammy_conversations@v1.2.0/mod.ts";
+} from "./deps.deno.ts"
 
 type MyContext = Context & ConversationFlavor;
 type MyConversation = Conversation<MyContext>;
