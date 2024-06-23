@@ -47,7 +47,7 @@ bot.command("generate", async(ctx) => {
   const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   // add database secret as a check for future  
   const {data, error} = await supabase.from("telegram_profiles").insert({
-      telegram_id: id,
+      tg_id: id,
       token: token,
       tg_username: ctx.from?.username,
       first_name: ctx.from?.first_name,
