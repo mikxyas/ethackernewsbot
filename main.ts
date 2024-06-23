@@ -39,13 +39,7 @@ async function movie(conversation: MyConversation, ctx: MyContext) {
 
 bot.use(createConversation(movie));
 
-bot.command('start', async (ctx) => {
-  try {
-    await ctx.conversation.enter('movie');
-  } catch (err) {
-    console.error("Error entering conversation:", err);
-  }
-});
+bot.command('start', async (ctx) =>  await ctx.conversation.enter('movie'));
 
 bot.command('ping', (ctx) => ctx.reply(`Pong! ${new Date()} ${Date.now()}`));
 
