@@ -44,7 +44,8 @@ bot.command("start", (ctx) => {
 bot.command("generate", async(ctx) => {
  const id = ctx.from?.id;
   // generate a 23 character token
-  const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const big_token = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+  const token = big_token.substring(0, 21);
   // add database secret as a check for future  
   const {data, error} = await supabase.from("telegram_profiles").insert({
       tg_id: id,
@@ -58,7 +59,7 @@ bot.command("generate", async(ctx) => {
        console.log(error);
        ctx.reply("It seems you are already connected");
     } else {
-      // reply with mark down sytaxse
+      // reply with mark down 
       console.log(data)
       ctx.reply(`Here is your token: \`${token}\`\n\n Go to https://show.eacc.et/telegram and paste the token there`
       )
