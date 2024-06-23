@@ -36,9 +36,9 @@ async function movie(conversation: MyConversation, ctx: MyContext) {
 
 bot.use(createConversation(movie));
 
-bot.command("start", async(ctx) => {
+bot.command("start", (ctx) => {
     // await   ctx.conversation.enter("movie");
-    ctx.reply("Welcome! use /generate to get your token and connect your account")
+    ctx.reply("Welcome! use /generate to get your token and connect your account to Hacker News et")
 });
 
 bot.command("generate", async(ctx) => {
@@ -48,7 +48,7 @@ bot.command("generate", async(ctx) => {
   // add database secret as a check for future  
   const {data, error} = await supabase.from("telegram_profiles").insert({
       tg_id: id,
-      token: token,
+      verf_token: token,
       tg_username: ctx.from?.username,
       first_name: ctx.from?.first_name,
       last_name: ctx.from?.last_name,
@@ -56,12 +56,11 @@ bot.command("generate", async(ctx) => {
     });
     if (error) {
        console.log(error);
-       ctx.reply("An error occured, please try again later");
+       ctx.reply("It seems you are already connected");
     } else {
       // reply with mark down sytaxse
       console.log(data)
-      ctx.reply(
-        `Here is your token: \`${token}\`\n\nPlease keep it safe, you will need it to connect your account`
+      ctx.reply(`Here is your token: \`${token}\`\n\n Go to https://show.eacc.et/telegram and paste the token there`
       )
     }
 })
