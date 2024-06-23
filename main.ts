@@ -18,7 +18,7 @@ bot.use(conversations());
 
 /** Defines the conversation */
 async function greeting(conversation: MyConversation, ctx: MyContext) {
-  try {
+
     await ctx.reply('Hello! What is your name?');
     const nameResponse = await conversation.wait();
     const name = nameResponse.message?.text;
@@ -28,10 +28,7 @@ async function greeting(conversation: MyConversation, ctx: MyContext) {
     const age = ageResponse.message?.text;
 
     await ctx.reply(`Thank you, ${name}! I see you are ${age} years old.`);
-  } catch (error) {
-    console.error('Error in conversation:', error);
-    await ctx.reply('Something went wrong, please try again.');
-  }
+
 }
 
 bot.use(createConversation(greeting));
