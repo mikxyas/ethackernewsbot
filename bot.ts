@@ -44,6 +44,7 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?start_app=" +  post_id;
         const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is the post you requested 🗿')
+        await ctx.reply(`Here is the link to the post: ${post_link}`)
         await ctx.reply(data[0].title, {reply_markup: keyboard});
     }
   }
