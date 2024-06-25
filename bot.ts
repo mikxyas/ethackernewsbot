@@ -21,6 +21,7 @@ export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") || "");
 bot.use(session({ initial: () => ({}) }))
 bot.use(conversations());
 function escapeMarkdown(text: string) {
+  // if(!text) return "";
   return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
 }
 async function getfancypost(conversation: MyConversation, ctx: MyContext) {
@@ -47,7 +48,7 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is the post you requested 🗿')
         const title = escapeMarkdown(data[0].title);
-        const about = escapeMarkdown(data[0]?.about);
+        const about = escapeMarkdown(data[0]?.text);
         // const author = escapeMarkdown(data[0]?.author);
         await ctx.reply(`**${title}**\n\n>${about}`, {reply_markup: keyboard, parse_mode:"Markdown"});
     }
