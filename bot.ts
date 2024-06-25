@@ -41,7 +41,7 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         console.log(data);
         // reply with the post with the title as the body and the url as an inline button at the bottom of the post 
         // make the url a string so that it can be used as a button
-        const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?redirect_to=" + "/post/" + post_id;
+        const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?start_app=" +  post_id;
         const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is the post you requested 🗿')
         await ctx.reply(data[0].title, {reply_markup: keyboard});
