@@ -50,7 +50,7 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         const title = escapeMarkdown(data[0].title);
         const about = escapeMarkdown(data[0]?.text);
         // const author = escapeMarkdown(data[0]?.author);
-        await ctx.reply(`**${title}**\n\n>${about}`, {reply_markup: keyboard, parse_mode:"Markdown"});
+        await ctx.reply(`**${title}**\n\n>${about}`, {reply_markup: keyboard, parse_mode:"MarkdownV2"});
     }
   }
 
