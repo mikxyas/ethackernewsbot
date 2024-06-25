@@ -20,7 +20,9 @@ export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") || "");
 
 bot.use(session({ initial: () => ({}) }))
 bot.use(conversations());
-
+function escapeMarkdown(text: string) {
+  return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+}
 async function getfancypost(conversation: MyConversation, ctx: MyContext) {
     await ctx.reply("Send me the link to the Hacker News Post?");
     const post_link = await conversation.form.url();
@@ -44,8 +46,10 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?startapp=" +  post_id;
         const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is the post you requested 🗿')
-        await ctx.reply(`Here is the link to the post: ${hackerNewsBot}`)
-        await ctx.reply(data[0].title, {reply_markup: keyboard});
+        const title = escapeMarkdown(data[0].title);
+        const about = escapeMarkdown(data[0]?.about);
+        // const author = escapeMarkdown(data[0]?.author);
+        await ctx.reply(`**${title}**\n\n>${about}`, {reply_markup: keyboard, parse_mode:"Markdown"});
     }
   }
 
@@ -53,7 +57,7 @@ bot.use(createConversation(getfancypost));
 
 bot.command("start", (ctx) => {
     // await   ctx.conversation.enter("movie");
-    ctx.reply("Hacker News Bot here 🗿\n open web app to explore")
+    ctx.reply("Hacker News Bot 🗿\n use /fancypost to get a fancy post card of your post in hacker news")
 });
 
 bot.command("fancypost", async (ctx) => {
