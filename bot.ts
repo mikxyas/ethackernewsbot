@@ -22,7 +22,9 @@ bot.use(session({ initial: () => ({}) }))
 bot.use(conversations());
 function escapeMarkdown(text: string) {
   if(!text) return "";
-  return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+  // return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+  return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+
 }
 async function getfancypost(conversation: MyConversation, ctx: MyContext) {
     await ctx.reply("Send me the link to the Hacker News Post?");
@@ -43,7 +45,7 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
         const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is your card 🗿')
         const title = escapeMarkdown(data[0].title);
-        const about = escapeMarkdown(data[0]?.text);
+        const about = escapeMarkdown(data[0].text || "")
         await ctx.reply(`__**${title}**__</b>\n\n${about}`, {reply_markup: keyboard, parse_mode:'MarkdownV2'});
     }
   }
