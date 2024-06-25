@@ -18,6 +18,11 @@ import { Bot,
 
 export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") || "");
 
+function isTextEmptyOrWhitespace(text: string) {
+  if (text == 'null') return true
+  return text.trim().length === 0;
+}
+
 bot.use(session({ initial: () => ({}) }))
 bot.use(conversations());
 function escapeMarkdown(text: string) {
@@ -42,7 +47,16 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
 
     }else{
         const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?startapp=" +  post_id;
-        const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
+        // add another button which says view hack
+        let keyboard
+        if(isTextEmptyOrWhitespace(data[0].link)){
+          keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
+        }else{
+          keyboard = new InlineKeyboard()
+            .url("View Post", hackerNewsBot)
+            .url("Content Link", data[0].link);
+        }
+        // const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is your card 🗿')
         const title = escapeMarkdown(data[0].title);
         const about = escapeMarkdown(data[0].text || "")
