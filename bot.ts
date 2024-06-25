@@ -23,9 +23,15 @@ bot.use(conversations());
 
 async function getfancypost(conversation: MyConversation, ctx: MyContext) {
     await ctx.reply("Send me the link to the Hacker News Post?");
-    const link = await conversation.form.url;
+    const post_link = await conversation.form.url();
+    // if it is not valid url, ask the user to send a valid url
+    if(!post_link){
+        await ctx.reply("Please send a valid url");
+        return;
+    }
     // get the post id from the link and fetch the post the url looks like this https://show.eacc.et/post/1234
-    const post_id = link.split("/")[4];
+    const post_id = new URL(post_link).pathname.split("/")[2];
+
     const {data, error} = await supabase.from("posts").select("*").eq("id", post_id);
     if(error){
         console.log(error);
@@ -34,7 +40,9 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
     }else{
         console.log(data);
         // reply with the post with the title as the body and the url as an inline button at the bottom of the post 
-        const keyboard = new InlineKeyboard().url("View Post", link);
+        // make the url a string so that it can be used as a button
+        const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?redirect_to=" + post_link;
+        const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is the post you requested 🗿')
         await ctx.reply(data[0].title, {reply_markup: keyboard});
     }
