@@ -27,7 +27,6 @@ bot.use(session({ initial: () => ({}) }))
 bot.use(conversations());
 function escapeMarkdown(text: string) {
   if(!text) return "";
-  // return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
   return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
 
 }
@@ -47,7 +46,6 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
 
     }else{
         const hackerNewsBot =  "https://t.me/acc_etbot/hackernews" + "?startapp=" +  post_id;
-        // add another button which says view hack
         let keyboard
         if(isTextEmptyOrWhitespace(data[0].link)){
           keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
@@ -56,7 +54,6 @@ async function getfancypost(conversation: MyConversation, ctx: MyContext) {
             .url("View Post", hackerNewsBot)
             .url("Content Link", data[0].link);
         }
-        // const keyboard = new InlineKeyboard().url("View Post", hackerNewsBot);
         await ctx.reply('Here is your card 🗿')
         const title = escapeMarkdown(data[0].title);
         const about = escapeMarkdown(data[0].text || "")
@@ -74,4 +71,4 @@ bot.command("fancypost", async (ctx) => {
     await ctx.conversation.enter("getfancypost");
 })
 
-bot.command("ping", (ctx) => ctx.reply(`DONG 🗿`));
+bot.command("ping", (ctx) => ctx.reply(`BONG 🗿`));
